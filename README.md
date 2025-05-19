@@ -1,2 +1,1 @@
-# portfolio\Chirag
- 
+![Preview Img](files/preview.png)
