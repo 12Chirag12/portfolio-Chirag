@@ -54,7 +54,7 @@ body{
   align-items: center;
 }
 
-.logo {
+.Logo {
   display: flex;
   align-items: center;
   position: relative;
@@ -63,10 +63,11 @@ body{
   font-weight: 700;
 }
 
-.logo .fa-bolt {
+.Logo .fa-bolt {
   color: #fed700;
   font-size: 19.5px;
   position: absolute;
+  right: 20%;
   top: 60%;
   left: 100%;
   transform: translate(-50%, -50%);
