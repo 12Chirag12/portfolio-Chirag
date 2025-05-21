@@ -1,6 +1,11 @@
 $(document).ready(function() {
 
   //sticky header
+  // Toggle mobile menu
+$(".menu-toggle").click(function () {
+  $(".header ul").toggleClass("showing");
+});
+
     $(window).scroll(function() {
       if ($(this).scrollTop() > 1) {
         $(".header-area").addClass("sticky");
