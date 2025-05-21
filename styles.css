@@ -107,40 +107,64 @@ body{
 
 /* ------------------- Responsive Menu ------------------- */
 
-.header .menu_icon {
-  color: #fff;
-  font-size: 26px;
-  cursor: pointer;
+.menu_icon {
   display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  user-select: none;
+  color: #fff; /* assuming white menu icon */
 }
 
-/* Show hamburger and hide menu on small screens */
 @media (max-width: 768px) {
-  .header ul {
+  .menu_icon {
+    display: block;
+    position: absolute;
+    right: 30px;
+    top: 25px;
+    z-index: 1100;
+  }
+
+  .navbar {
     display: none;
     flex-direction: column;
-    background-color: #202020;
+    background-color: #202020; /* dark background matching your header */
     position: absolute;
     top: 60px;
     right: 0;
     width: 100%;
-    text-align: left;
+    text-align: center;
     padding: 10px 0;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
   }
 
-  .header ul.showing {
+  .navbar.showing {
     display: flex;
   }
 
-  .header .menu_icon {
-    display: block;
+  .navbar li {
+    width: 100%;
+    margin: 10px 0;
+    border-bottom: 1px solid #444; /* subtle border */
   }
 
-  .header ul li {
-    margin: 10px 0;
+  .navbar li:last-child {
+    border-bottom: none;
+  }
+
+  .navbar li a {
+    color: #fff;
+    text-transform: capitalize;
+    display: block;
+    padding: 10px 0;
+    font-size: 1.1rem;
+  }
+
+  .navbar li a:hover,
+  .navbar li a.active {
+    color: #fed700; /* highlight color */
   }
 }
-
 
 /*---------------------------HomePage--------------------------*/
 
