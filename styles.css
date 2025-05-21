@@ -99,11 +99,11 @@ body{
 }
 
 .header ul li a.active {
-  color: #fed700;
+  color: #f01616;
 }
 
 .header ul li a:hover {
-  color: #fed700;
+  color: #ff0303;
 }
 
 /* ------------------- Responsive Menu ------------------- */
@@ -163,7 +163,7 @@ body{
 
   .navbar li a:hover,
   .navbar li a.active {
-    color: #fed700; /* highlight color */
+    color: hsl(228, 100%, 50%); /* highlight color */
   }
 }
 
@@ -206,7 +206,7 @@ profile-photo .img{
   font-size: 14px;
 }
 .profile-text h1{
-  color: #fed700;
+  color: #ed0000;
   font-size: 3rem; 
 }
 .profile-text p{
@@ -219,7 +219,7 @@ profile-photo .img{
   transition: 0.5s;
 }
 .profile-text .social i:hover{
-  color:#fed700;
+  color:#ff0000;
   transform: rotate(360deg);
 }
 
@@ -241,7 +241,7 @@ profile-photo .img{
   flex-basis: 60%;
 }
 .about-content h4{
-  color: #fed700;
+  color: #fe0000;
   font-size: 40px;
   line-height: 70px;
   text-transform: capitalize;
@@ -290,7 +290,7 @@ profile-photo .img{
   box-shadow: 0 10px 10px -8px rgb(0 0 0 / 78%);
 }
 .btn.active{
-  border-color: #fed700;
+  border-color: #fe0000;
 }
 
 
@@ -304,7 +304,7 @@ profile-photo .img{
 }
 
 .education-content .title{
-  color: #fed700;
+  color: #fe0000;
 }
 .education-content .row .education,
 .education-content .row .internship
@@ -351,7 +351,7 @@ profile-photo .img{
   height: 100%;
   left: 7px;
   top: 0;
-  background-color: #fed700;  
+  background-color: #fe0000;  
 }
 .education-content .row .circle-dot{
   position: absolute;
@@ -393,7 +393,7 @@ profile-photo .img{
   text-transform: uppercase;
   font-size: 40px;
   line-height: 40px;
-  color: #fed700;
+  color: #fe0000;
   margin-bottom: 20px;
 }
 .project-title p{
@@ -417,7 +417,7 @@ profile-photo .img{
     transition: .3s;
 }
 .project i{
-  background-color: #fed700;
+  background-color: #fe0000;
   width: 60px;
   height: 60px;
   color: #333;
@@ -434,7 +434,7 @@ profile-photo .img{
   text-align: justify;
 }
 .project:hover{
-  border-color: #fed700;
+  border-color: #fe0000;
 }
 
 
@@ -448,7 +448,7 @@ profile-photo .img{
 .contact-content .contact-title h4{
   font-size: 40px;
   text-transform: capitalize;
-  color: #fed700;
+  color: #fe0000;
   padding-bottom: 10px;
 }
 .contact-content .contact-title p{
@@ -467,7 +467,7 @@ profile-photo .img{
 
 .contact .submit{
   width: auto;
-  background-color: #fed700;
+  background-color: #fb8c8c;
   padding: 10px 40px;
   font-weight:bold ;
   font-size: 18px;
