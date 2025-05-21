@@ -31,10 +31,10 @@ body{
 
 
 
-      /*---------------------------Header---------------------------*/
+ /*---------------------------Header---------------------------*/
 
-.header-area{
-  padding:25px 0;
+.header-area {
+  padding: 25px 0;
   transition: padding .3s;
 }
 
@@ -48,16 +48,16 @@ body{
   padding: 5px;
 }
 
-.header{
-  display:flex;
+.header {
+  display: flex;
   justify-content: space-between;
   align-items: center;
-  /* padding-bottom: 2rem; */
-} 
+}
+
 .logo {
   display: flex;
   align-items: center;
-  position: relative; 
+  position: relative;
   text-transform: uppercase;
   font-size: 26px;
   font-weight: 700;
@@ -66,45 +66,79 @@ body{
 .logo .fa-bolt {
   color: #fed700;
   font-size: 19.5px;
-  position: absolute; 
+  position: absolute;
   top: 60%;
-  left: 100%; 
-  transform: translate(-50%, -50%); 
-  z-index: 1; 
+  left: 100%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
 }
 
 .signature {
-  width: 100px; 
-  height:auto; 
-  margin-right: 10px; 
+  width: 100px;
+  height: auto;
+  margin-right: 10px;
 }
 
 .header ul li:first-child {
-  margin-right: auto; 
-}  
-
-.header ul{
-  display: flex;
-  align-items: center; 
+  margin-right: auto;
 }
-.header ul li{
+
+.header ul {
+  display: flex;
+  align-items: center;
+}
+
+.header ul li {
   margin: 0 15px;
 }
-.header ul li a{
+
+.header ul li a {
   text-transform: capitalize;
   display: block;
 }
-.header ul li a.active{
+
+.header ul li a.active {
   color: #fed700;
-} 
-.header ul li a:hover{
-  color:#fed700;
 }
-.header .menu_icon{
-  color:#fff;
-  font-size: 18px;
+
+.header ul li a:hover {
+  color: #fed700;
+}
+
+/* ------------------- Responsive Menu ------------------- */
+
+.header .menu_icon {
+  color: #fff;
+  font-size: 26px;
   cursor: pointer;
   display: none;
+}
+
+/* Show hamburger and hide menu on small screens */
+@media (max-width: 768px) {
+  .header ul {
+    display: none;
+    flex-direction: column;
+    background-color: #202020;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 100%;
+    text-align: left;
+    padding: 10px 0;
+  }
+
+  .header ul.showing {
+    display: flex;
+  }
+
+  .header .menu_icon {
+    display: block;
+  }
+
+  .header ul li {
+    margin: 10px 0;
+  }
 }
 
 
