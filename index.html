@@ -34,12 +34,6 @@
   <div class="tech-grid" aria-hidden="true"></div>
   <div class="noise" aria-hidden="true"></div>
 
-  <canvas class="cursor-trail" id="cursor-trail" aria-hidden="true"></canvas>
-  <div class="cursor cursor--dot" id="cursor-dot" aria-hidden="true"></div>
-  <div class="cursor cursor--ring" id="cursor-ring" aria-hidden="true">
-    <span id="cursor-label"></span>
-  </div>
-
   <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress"></span></div>
 
   <header class="site-header" id="site-header">
@@ -158,7 +152,7 @@
               <p>Diploma score</p>
             </div>
             <div class="fact-card spotlight-card">
-              <span>03</span>
+              <span>06</span>
               <p>Featured projects</p>
             </div>
             <div class="fact-card spotlight-card">
@@ -249,12 +243,114 @@
             <span class="section-index">03 / Projects</span>
             <h2 id="projects-title">Selected work,<br><span>built with purpose.</span></h2>
           </div>
-          <p>Practical projects that explore commerce, student living, and the craft of presenting work on the web.</p>
+          <p>Practical systems across troubleshooting, healthcare access, digital safety, student living, and the web.</p>
+        </div>
+
+        <div class="project-toolbar" data-reveal>
+          <div class="project-filters" role="group" aria-label="Filter projects">
+            <button class="project-filter is-active" type="button" data-project-filter="all" aria-pressed="true">All work</button>
+            <button class="project-filter" type="button" data-project-filter="systems" aria-pressed="false">Systems &amp; ML</button>
+            <button class="project-filter" type="button" data-project-filter="community" aria-pressed="false">Community</button>
+            <button class="project-filter" type="button" data-project-filter="web" aria-pressed="false">Web</button>
+          </div>
+          <p class="project-count" aria-live="polite"><span id="project-count">06</span> projects</p>
         </div>
 
         <div class="projects-list">
-          <article class="project-card project-card--wide spotlight-card tilt-card" data-reveal>
-            <a class="project-visual project-visual--commerce" href="https://12chirag12.github.io/shop-chirag/" target="_blank" rel="noopener noreferrer" data-cursor="view" aria-label="Open Shopping Website live project">
+          <article class="project-card project-card--wide spotlight-card tilt-card" data-project-card data-project-category="systems" data-reveal>
+            <div class="project-visual project-visual--smartfix">
+              <div class="diagnostic-panel" aria-hidden="true">
+                <div class="diagnostic-panel__head">
+                  <span><i></i> SmartFix</span>
+                  <small>System scan / 03</small>
+                </div>
+                <div class="diagnostic-panel__body">
+                  <div class="diagnostic-orbit"><span>System<br><b>Ready</b></span></div>
+                  <div class="diagnostic-list">
+                    <div><span>Network stack</span><b>Healthy</b></div>
+                    <div><span>Update service</span><b>Review</b></div>
+                    <div><span>Disk health</span><b>Healthy</b></div>
+                  </div>
+                </div>
+                <div class="diagnostic-action"><span>3 system areas checked</span><b>Resolve safely →</b></div>
+              </div>
+              <span class="project-visual__label">Windows diagnostics</span>
+            </div>
+            <div class="project-info">
+              <div class="project-number">01 / System utility</div>
+              <h3>SmartFix</h3>
+              <p>A Windows troubleshooting system that detects common system issues, explains their status, and guides users through reliable fixes.</p>
+              <ul class="tag-list"><li>Windows utility</li><li>Diagnostics</li><li>Guided resolution</li></ul>
+            </div>
+          </article>
+
+          <article class="project-card project-card--wide project-card--reverse spotlight-card tilt-card" data-project-card data-project-category="community" data-reveal>
+            <div class="project-visual project-visual--health">
+              <div class="health-panel" aria-hidden="true">
+                <div class="health-panel__head">
+                  <span>GramHealth</span>
+                  <div class="signal-bars"><i></i><i></i><i></i><i></i></div>
+                  <small>Low-data mode</small>
+                </div>
+                <div class="health-prompt">
+                  <small>Tell us what you feel</small>
+                  <strong>Basic symptom check</strong>
+                  <div class="symptom-chips"><i>Fever</i><i>Fatigue</i><i>Cough</i></div>
+                </div>
+                <div class="health-result">
+                  <span>Preliminary guidance</span>
+                  <b>Designed to work with limited connectivity</b>
+                  <small>Health support · Not a clinical diagnosis</small>
+                </div>
+              </div>
+              <span class="project-visual__label">Rural health access</span>
+            </div>
+            <div class="project-info">
+              <div class="project-number">02 / Health platform</div>
+              <h3>GramHealth</h3>
+              <p>A rural healthcare platform designed for low-connectivity environments, providing basic symptom-based disease prediction and accessible health guidance.</p>
+              <ul class="tag-list"><li>Low bandwidth</li><li>Symptom prediction</li><li>Rural healthcare</li></ul>
+            </div>
+          </article>
+
+          <article class="project-card spotlight-card tilt-card" data-project-card data-project-category="community" data-reveal>
+            <div class="project-visual project-visual--room">
+              <div class="phone-mock" aria-hidden="true">
+                <div class="phone-mock__speaker"></div>
+                <div class="map-art"><i></i><i></i><i></i><span>Find your space</span></div>
+                <div class="room-tile"><i></i><span><b>Student room</b><small>Roommate-ready stay</small></span></div>
+              </div>
+              <span class="project-visual__label">Student housing</span>
+            </div>
+            <div class="project-info">
+              <div class="project-number">03 / Application</div>
+              <h3>Student Room Share</h3>
+              <p>An application that helps students moving to another city find compatible roommates, share accommodation, and split rent.</p>
+              <ul class="tag-list"><li>Roommate matching</li><li>Accommodation</li><li>Rent sharing</li></ul>
+            </div>
+          </article>
+
+          <article class="project-card spotlight-card tilt-card" data-project-card data-project-category="systems" data-reveal>
+            <div class="project-visual project-visual--smishing">
+              <div class="smishing-panel" aria-hidden="true">
+                <div class="smishing-panel__head"><span>Message analysis</span><small>API connected</small></div>
+                <div class="sms-bubble">Your account is locked. Verify now at secure-check.example</div>
+                <div class="risk-score"><span><i></i> Suspicious link detected</span><b>94<small>% risk</small></b></div>
+                <div class="risk-meter"><i></i></div>
+                <div class="detection-tags"><span>Urgency language</span><span>Unknown domain</span></div>
+              </div>
+              <span class="project-visual__label">SMS threat detection</span>
+            </div>
+            <div class="project-info">
+              <div class="project-number">04 / Machine learning</div>
+              <h3>Smishing Detection</h3>
+              <p>A machine-learning system that identifies SMS phishing messages and exposes detection through an API for integration.</p>
+              <ul class="tag-list"><li>Machine learning</li><li>SMS security</li><li>API integration</li></ul>
+            </div>
+          </article>
+
+          <article class="project-card spotlight-card tilt-card" data-project-card data-project-category="web" data-reveal>
+            <a class="project-visual project-visual--commerce" href="https://12chirag12.github.io/shop-chirag/" target="_blank" rel="noopener noreferrer" aria-label="Open Shopping Website live project">
               <div class="browser-mock" aria-hidden="true">
                 <div class="browser-mock__bar"><i></i><i></i><i></i><span>shop-chirag</span></div>
                 <div class="browser-mock__body">
@@ -265,32 +361,15 @@
               <span class="project-visual__label">Live project ↗</span>
             </a>
             <div class="project-info">
-              <div class="project-number">01 / Web</div>
+              <div class="project-number">05 / Web</div>
               <h3>Shopping Website</h3>
-              <p>A straightforward shopping experience implemented with semantic HTML, responsive CSS, and client-side JavaScript.</p>
+              <p>A responsive shopping experience implemented with semantic HTML, modern CSS, and client-side JavaScript.</p>
               <ul class="tag-list"><li>HTML</li><li>CSS</li><li>JavaScript</li></ul>
-              <a class="text-link" href="https://12chirag12.github.io/shop-chirag/" target="_blank" rel="noopener noreferrer" data-cursor="link">View live site <span aria-hidden="true">↗</span></a>
+              <a class="text-link" href="https://12chirag12.github.io/shop-chirag/" target="_blank" rel="noopener noreferrer">View live site <span aria-hidden="true">↗</span></a>
             </div>
           </article>
 
-          <article class="project-card spotlight-card tilt-card" data-reveal>
-            <div class="project-visual project-visual--room">
-              <div class="phone-mock" aria-hidden="true">
-                <div class="phone-mock__speaker"></div>
-                <div class="map-art"><i></i><i></i><i></i><span>Find your space</span></div>
-                <div class="room-tile"><i></i><span><b>Student room</b><small>Value-focused stay</small></span></div>
-              </div>
-              <span class="project-visual__label">Application concept</span>
-            </div>
-            <div class="project-info">
-              <div class="project-number">02 / Application</div>
-              <h3>Student Room Share App</h3>
-              <p>A platform concept that helps students moving away for further studies discover rooms that fit their needs and budget.</p>
-              <ul class="tag-list"><li>App development</li><li>Group project</li><li>2024–2025</li></ul>
-            </div>
-          </article>
-
-          <article class="project-card spotlight-card tilt-card" data-reveal>
+          <article class="project-card spotlight-card tilt-card" data-project-card data-project-category="web" data-reveal>
             <div class="project-visual project-visual--portfolio image-reveal">
               <picture>
                 <source srcset="project-portfolio.webp" type="image/webp">
@@ -299,9 +378,9 @@
               <span class="project-visual__label">Personal platform</span>
             </div>
             <div class="project-info">
-              <div class="project-number">03 / Portfolio</div>
+              <div class="project-number">06 / Portfolio</div>
               <h3>Portfolio Website</h3>
-              <p>A personal platform created to introduce my work, projects, education, and internship experience through the web.</p>
+              <p>A personal platform created to present my work, education, experience, and approach to building useful software.</p>
               <ul class="tag-list"><li>HTML</li><li>CSS</li><li>JavaScript</li></ul>
             </div>
           </article>
