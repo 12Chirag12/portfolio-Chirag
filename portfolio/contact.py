@@ -54,7 +54,7 @@ def validate_contact(payload: Mapping[str, Any]) -> tuple[ContactMessage, dict[s
         errors["email"] = "Please enter a valid email."
     if len(message.subject) < 3:
         errors["subject"] = "Please add a subject."
-    if len(message.message) < 10:
+    if not message.message:
         errors["message"] = "Please add a little more detail."
     return message, errors
 

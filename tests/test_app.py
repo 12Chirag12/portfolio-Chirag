@@ -68,6 +68,20 @@ class PortfolioAppTests(unittest.TestCase):
         self.assertEqual(params["reply_to"], "visitor@example.com")
         self.assertIn("&lt;script&gt;", params["html"])
 
+    @patch("portfolio.contact.resend.Emails.send", return_value={"id": "email_short_message"})
+    def test_short_non_empty_message_is_accepted(self, _resend_send):
+        response = self.client.post(
+            "/api/contact",
+            json={
+                "name": "Chirag Abhijit Patil",
+                "email": "chirag2611patil@gmail.com",
+                "subject": "nin",
+                "message": "aq",
+            },
+        )
+        self.addCleanup(response.close)
+        self.assertEqual(response.status_code, 200)
+
 
 if __name__ == "__main__":
     unittest.main()
