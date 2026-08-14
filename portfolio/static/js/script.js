@@ -1238,7 +1238,7 @@
       status.className = "form-status";
       status.textContent = "Securely sending your message…";
 
-      const endpoint = form.action.replace("formsubmit.co/", "formsubmit.co/ajax/");
+      const endpoint = form.action;
       const payload = Object.fromEntries(new FormData(form).entries());
 
       try {
@@ -1250,7 +1250,20 @@
           },
           body: JSON.stringify(payload),
         });
-        if (!response.ok) throw new Error(`Form service returned ${response.status}`);
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || !result.ok) {
+          if (result.fields && typeof result.fields === "object") {
+            controls.forEach((control) => {
+              const message = result.fields[control.name];
+              if (!message) return;
+              const field = control.closest(".field");
+              field?.classList.add("is-invalid");
+              const fieldError = qs(".field-error", field);
+              if (fieldError) fieldError.textContent = message;
+            });
+          }
+          throw new Error(result.message || `Contact service returned ${response.status}`);
+        }
 
         form.reset();
         qsa(".field", form).forEach((field) => field.classList.remove("is-invalid"));
@@ -1259,7 +1272,14 @@
       } catch (error) {
         console.warn("Contact form submission failed:", error);
         status.className = "form-status is-error";
-        status.innerHTML = 'The form could not send right now. Please email <a href="mailto:223chirag2012@sjcem.edu.in">223chirag2012@sjcem.edu.in</a>.';
+        const serviceMessage = error instanceof Error ? error.message : "";
+        const safeMessage = serviceMessage && !serviceMessage.startsWith("Contact service returned") && serviceMessage !== "Failed to fetch"
+          ? serviceMessage
+          : "The form could not send right now.";
+        const emailLink = document.createElement("a");
+        emailLink.href = "mailto:223chirag2012@sjcem.edu.in";
+        emailLink.textContent = "223chirag2012@sjcem.edu.in";
+        status.replaceChildren(document.createTextNode(`${safeMessage} Please email `), emailLink, document.createTextNode("."));
       } finally {
         if (button) button.disabled = false;
         if (buttonLabel) buttonLabel.textContent = originalLabel;
