@@ -36,6 +36,49 @@
 
   <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress"></span></div>
 
+  <button class="command-trigger" id="command-trigger" type="button" aria-haspopup="dialog" aria-controls="command-center" aria-expanded="false">
+    <span class="command-trigger__signal" aria-hidden="true"></span>
+    <span>Command center</span>
+    <kbd>Ctrl K</kbd>
+  </button>
+
+  <div class="command-center" id="command-center" hidden>
+    <div class="command-center__backdrop" data-command-close aria-hidden="true"></div>
+    <section class="command-panel" role="dialog" aria-modal="true" aria-labelledby="command-title">
+      <div class="command-panel__aura" aria-hidden="true"></div>
+      <header class="command-panel__header">
+        <div>
+          <span class="command-panel__kicker"><i aria-hidden="true"></i> Interface online</span>
+          <h2 id="command-title">Command center</h2>
+        </div>
+        <button class="command-panel__close" type="button" data-command-close aria-label="Close command center">×</button>
+      </header>
+
+      <div class="command-search">
+        <span aria-hidden="true">⌕</span>
+        <label class="sr-only" for="command-search-input">Search commands</label>
+        <input id="command-search-input" type="search" placeholder="Search sections, projects, or actions…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="command-list" aria-expanded="true">
+        <kbd>ESC</kbd>
+      </div>
+
+      <div class="command-panel__meta">
+        <span id="command-count">00 commands</span>
+        <span><i aria-hidden="true"></i> Keyboard ready</span>
+      </div>
+
+      <ul class="command-list" id="command-list" role="listbox" aria-label="Available commands"></ul>
+      <p class="command-empty" id="command-empty" hidden>No matching command. Try “projects” or “contact”.</p>
+
+      <footer class="command-panel__footer">
+        <span><kbd>↑</kbd><kbd>↓</kbd> Navigate</span>
+        <span><kbd>↵</kbd> Run command</span>
+        <span class="command-panel__signature">CP / SYSTEM 01</span>
+      </footer>
+    </section>
+  </div>
+
+  <div class="command-toast" id="command-toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
   <header class="site-header" id="site-header">
     <div class="header-shell">
       <a class="brand magnetic" href="#home" aria-label="Chirag Patil, back to home">

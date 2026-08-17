@@ -23,6 +23,7 @@
     initContactForm();
     initCopyEmail();
     initLocation();
+    initCommandCenter();
 
     const particleField = new ParticleField(qs("#atmosphere"));
     const magneticSystem = new MagneticSystem(qsa(".magnetic"));
@@ -98,6 +99,232 @@
     window.addEventListener("resize", () => {
       if (window.innerWidth > 900) closeMenu();
     }, { passive: true });
+  }
+
+  function initCommandCenter() {
+    const trigger = qs("#command-trigger");
+    const center = qs("#command-center");
+    const panel = qs(".command-panel", center);
+    const input = qs("#command-search-input");
+    const list = qs("#command-list");
+    const count = qs("#command-count");
+    const empty = qs("#command-empty");
+    const toast = qs("#command-toast");
+    if (!trigger || !center || !panel || !input || !list || !count || !empty || !toast) return;
+
+    const isMac = /Mac|iPhone|iPad/.test(navigator.platform);
+    const triggerKey = qs("kbd", trigger);
+    if (triggerKey) triggerKey.textContent = isMac ? "⌘ K" : "Ctrl K";
+
+    let isOpen = false;
+    let activeIndex = 0;
+    let visibleCommands = [];
+    let lastFocused = null;
+    let closeTimer = 0;
+    let toastTimer = 0;
+    let previousRandomIndex = -1;
+
+    const showToast = (message) => {
+      window.clearTimeout(toastTimer);
+      toast.textContent = message;
+      toast.classList.add("is-visible");
+      toastTimer = window.setTimeout(() => toast.classList.remove("is-visible"), 2600);
+    };
+
+    const goToSection = (sectionId) => {
+      const section = qs(`#${sectionId}`);
+      if (!section) return;
+      section.scrollIntoView({ behavior: reducedMotion.matches ? "auto" : "smooth", block: "start" });
+      try {
+        history.replaceState(null, "", `#${sectionId}`);
+      } catch {
+        // Hash updates are a progressive enhancement only.
+      }
+    };
+
+    const filterProjects = (filter) => {
+      qs(`[data-project-filter="${filter}"]`)?.click();
+      goToSection("projects");
+      const filterNames = { all: "All", systems: "Systems & ML", community: "Community", web: "Web" };
+      showToast(`${filterNames[filter] || "Selected"} projects loaded`);
+    };
+
+    const spotlightRandomProject = () => {
+      qs('[data-project-filter="all"]')?.click();
+      const cards = qsa("[data-project-card]");
+      if (!cards.length) return;
+      let nextIndex = Math.floor(Math.random() * cards.length);
+      if (cards.length > 1 && nextIndex === previousRandomIndex) nextIndex = (nextIndex + 1) % cards.length;
+      previousRandomIndex = nextIndex;
+      const card = cards[nextIndex];
+      card.hidden = false;
+      card.scrollIntoView({ behavior: reducedMotion.matches ? "auto" : "smooth", block: "center" });
+      card.classList.remove("is-command-highlighted");
+      void card.offsetWidth;
+      card.classList.add("is-command-highlighted");
+      window.setTimeout(() => card.classList.remove("is-command-highlighted"), 2100);
+      const projectName = qs("h3", card)?.textContent?.trim() || "Project";
+      showToast(`Spotlight locked: ${projectName}`);
+    };
+
+    const copyEmail = async () => {
+      const email = qs("[data-copy-email]")?.dataset.copyEmail || "223chirag2012@sjcem.edu.in";
+      try {
+        await navigator.clipboard.writeText(email);
+        showToast("Email copied to clipboard");
+      } catch {
+        window.location.href = `mailto:${email}`;
+      }
+    };
+
+    const downloadResume = () => {
+      qs('a[download][href*="Chirag_resume"]')?.click();
+      showToast("Résumé download started");
+    };
+
+    const commands = [
+      { id: "home", group: "Navigate", glyph: "01", label: "Return to home", detail: "Back to the opening scene", keywords: "hero start top", run: () => goToSection("home") },
+      { id: "about", group: "Navigate", glyph: "02", label: "Meet Chirag", detail: "Story, education, and profile", keywords: "about biography profile", run: () => goToSection("about") },
+      { id: "skills", group: "Navigate", glyph: "03", label: "Open the technology stack", detail: "Languages, backend, data, and web", keywords: "skills tools stack java sql node", run: () => goToSection("skills") },
+      { id: "projects", group: "Navigate", glyph: "04", label: "Explore selected work", detail: "Six practical builds and systems", keywords: "projects work portfolio", run: () => goToSection("projects") },
+      { id: "journey", group: "Navigate", glyph: "05", label: "View the journey", detail: "Education and experience timeline", keywords: "journey education experience timeline", run: () => goToSection("journey") },
+      { id: "contact", group: "Navigate", glyph: "06", label: "Start a conversation", detail: "Jump directly to the contact form", keywords: "contact message hire email", run: () => goToSection("contact") },
+      { id: "systems", group: "Project filter", glyph: "ML", label: "Show Systems & ML", detail: "SmartFix and Smishing Detection", keywords: "machine learning system windows sms", run: () => filterProjects("systems") },
+      { id: "community", group: "Project filter", glyph: "CO", label: "Show community projects", detail: "Healthcare and student living", keywords: "community health room share", run: () => filterProjects("community") },
+      { id: "web", group: "Project filter", glyph: "WB", label: "Show web projects", detail: "Shopping and portfolio experiences", keywords: "web website frontend", run: () => filterProjects("web") },
+      { id: "surprise", group: "Experiment", glyph: "✦", label: "Surprise me", detail: "Spotlight a random project", keywords: "random crazy discover project", run: spotlightRandomProject },
+      { id: "copy-email", group: "Quick action", glyph: "@", label: "Copy email address", detail: "Put Chirag's email on your clipboard", keywords: "copy mail contact", run: copyEmail },
+      { id: "resume", group: "Quick action", glyph: "↓", label: "Download résumé", detail: "Save the latest résumé as a PDF", keywords: "resume cv pdf download", run: downloadResume },
+    ];
+
+    const setActive = (nextIndex, shouldScroll = true) => {
+      if (!visibleCommands.length) return;
+      activeIndex = (nextIndex + visibleCommands.length) % visibleCommands.length;
+      const items = qsa(".command-item", list);
+      items.forEach((item, index) => {
+        const active = index === activeIndex;
+        item.classList.toggle("is-active", active);
+        item.setAttribute("aria-selected", String(active));
+      });
+      const activeItem = items[activeIndex];
+      if (activeItem) {
+        input.setAttribute("aria-activedescendant", activeItem.id);
+        if (shouldScroll) activeItem.scrollIntoView({ block: "nearest" });
+      }
+    };
+
+    const runCommand = (command) => {
+      if (!command) return;
+      const result = command.run();
+      closeCenter();
+      if (result && typeof result.catch === "function") {
+        result.catch(() => showToast("That action could not be completed"));
+      }
+    };
+
+    const renderCommands = () => {
+      const query = input.value.trim().toLowerCase();
+      visibleCommands = commands.filter((command) =>
+        `${command.label} ${command.detail} ${command.group} ${command.keywords}`.toLowerCase().includes(query)
+      );
+      activeIndex = 0;
+      list.replaceChildren();
+
+      visibleCommands.forEach((command, index) => {
+        const row = document.createElement("li");
+        row.setAttribute("role", "none");
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "command-item";
+        button.id = `command-option-${command.id}`;
+        button.setAttribute("role", "option");
+        button.setAttribute("aria-selected", String(index === 0));
+        button.innerHTML = `
+          <span class="command-item__glyph" aria-hidden="true">${command.glyph}</span>
+          <span class="command-item__copy"><strong>${command.label}</strong><small>${command.detail}</small></span>
+          <span class="command-item__group">${command.group}</span>
+          <span class="command-item__arrow" aria-hidden="true">↗</span>
+        `;
+        button.addEventListener("pointerenter", () => setActive(index, false));
+        button.addEventListener("focus", () => setActive(index, false));
+        button.addEventListener("click", () => runCommand(command));
+        row.append(button);
+        list.append(row);
+      });
+
+      count.textContent = `${String(visibleCommands.length).padStart(2, "0")} ${visibleCommands.length === 1 ? "command" : "commands"}`;
+      empty.hidden = visibleCommands.length > 0;
+      list.hidden = visibleCommands.length === 0;
+      if (visibleCommands.length) setActive(0, false);
+      else input.removeAttribute("aria-activedescendant");
+    };
+
+    const openCenter = () => {
+      if (isOpen) return;
+      window.clearTimeout(closeTimer);
+      isOpen = true;
+      lastFocused = document.activeElement;
+      center.hidden = false;
+      trigger.setAttribute("aria-expanded", "true");
+      document.body.classList.add("command-open");
+      qs("#menu-toggle")?.setAttribute("aria-expanded", "false");
+      qs("#site-nav")?.classList.remove("is-open");
+      document.body.classList.remove("nav-open");
+      input.value = "";
+      renderCommands();
+      requestAnimationFrame(() => center.classList.add("is-open"));
+      window.setTimeout(() => input.focus(), reducedMotion.matches ? 0 : 180);
+    };
+
+    function closeCenter() {
+      if (!isOpen) return;
+      isOpen = false;
+      center.classList.remove("is-open");
+      trigger.setAttribute("aria-expanded", "false");
+      document.body.classList.remove("command-open");
+      closeTimer = window.setTimeout(() => {
+        center.hidden = true;
+        if (lastFocused instanceof HTMLElement) lastFocused.focus({ preventScroll: true });
+      }, reducedMotion.matches ? 0 : 280);
+    }
+
+    trigger.addEventListener("click", openCenter);
+    qsa("[data-command-close]", center).forEach((button) => button.addEventListener("click", closeCenter));
+    input.addEventListener("input", renderCommands);
+
+    document.addEventListener("keydown", (event) => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        isOpen ? closeCenter() : openCenter();
+        return;
+      }
+      if (!isOpen) return;
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeCenter();
+      } else if (event.key === "ArrowDown") {
+        event.preventDefault();
+        setActive(activeIndex + 1);
+      } else if (event.key === "ArrowUp") {
+        event.preventDefault();
+        setActive(activeIndex - 1);
+      } else if (event.key === "Enter" && visibleCommands.length) {
+        event.preventDefault();
+        runCommand(visibleCommands[activeIndex]);
+      } else if (event.key === "Tab") {
+        const focusable = qsa('button:not([disabled]), input:not([disabled])', panel).filter((element) => !element.closest("[hidden]"));
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    });
   }
 
   function initScrollState() {
